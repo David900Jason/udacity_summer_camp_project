@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>BMI Calculator</h1>
+<form method="post">
+    <label for="weight">Weight (in kg):</label>
+    <input type="number" step="0.1" id="weight" name="weight" required>
+    <br>
+    <label for="height">Height (in cm):</label>
+    <input type="number" step="0.1" id="height" name="height" required>
+    <br>
+    <input type="submit" value="Calculate BMI">
+</form>
+{% endblock %}

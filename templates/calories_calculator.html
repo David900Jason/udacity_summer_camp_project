@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Calories Calculator</h1>
+<form method="post">
+    <label for="meal_name">Meal Name:</label>
+    <input type="text" id="meal_name" name="meal_name" required>
+    <br>
+    <label for="amount">Amount (in grams):</label>
+    <input type="number" step="0.1" id="amount" name="amount" required>
+    <br>
+    <input type="submit" value="Calculate Nutritional Info">
+</form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome to the Health App</h1>
+{% if session.get('username') %}
+    <p>Hello, {{ session['username'] }}!</p>
+{% else %}
+    <p>You are not logged in.</p>
+{% endif %}
+{% endblock %}
+
+<script>
+    // Check if the user was logged out
+    window.onload = function() {
+        // If the username is not in session, clear localStorage
+        if (!{{ session.get('username')|tojson }}) {
+            localStorage.removeItem('username');
+            console.log("Username removed from localStorage.");
+        }
+    };
+</script>
