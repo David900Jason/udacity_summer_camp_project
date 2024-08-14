@@ -1,4 +1,145 @@
 /* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Matemasie&display=swap');
+
+.navbar-Logo{
+  text-decoration: none;
+  font-size: 30px;
+  font-family: "Matemasie", sans-serif;
+  color: #3e8e41;
+}
+
+.navbar-link {
+  font-size: 20px;
+  color: #8BC34A;
+  text-decoration: none;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+.row2 {
+  align-items: center;
+}
+
+.drop-item {
+  font-size: 15px;
+  color: #8BC34A;
+  text-decoration: none;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
+.navbar {
+  background-color: #fff;
+  /* white background */
+  border-radius: 10px;
+  /* add rounded edges to the navbar */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* add a subtle shadow */
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  /* dark gray text */
+}
+
+.nav-link {
+  font-size: 18px;
+  color: #333;
+  /* dark gray text */
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #666;
+  /* darker gray text on hover */
+}
+
+.dropdown-item {
+  font-size: 18px;
+  color: #333;
+  /* dark gray text */
+  transition: color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  color: #666;
+  /* darker gray text on hover */
+}
+
+/* .navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  /* white
+} */
+
+.nav-link {
+  font-size: 18px;
+  color: #fff;
+  /* white */
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #ccc;
+  /* light gray */
+}
+
+.dropdown-item {
+  font-size: 18px;
+  color: #fff;
+  /* white */
+  transition: color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  color: #ccc;
+  /* light gray */
+} */
+
+.head h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+  /* dark gray */
+}
+
+.head p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+  /* dark gray */
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #4CAF50;
+  /* green */
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #333;
+  /* dark gray */
+}
+
+.features h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #4CAF50;
+  /* green */
+}
+
+.features p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+  /* dark gray */
+}
 
 * {
   box-sizing: border-box;
@@ -7,13 +148,18 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Open Sans, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f9f9f9;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
@@ -26,55 +172,39 @@ p {
 /* Header Styles */
 
 .head {
-  background-color: #337ab7;
+  background-color: #8BC34A;
+  /* Green color for a healthy vibe */
   color: #fff;
   padding: 20px;
   text-align: center;
-}
-
-.head h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.head p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.navbar container-fluid {
-  background-color: #6D545D;
+  border-bottom: 5px solid #4CAF50;
+  /* Add a green border */
 }
 
 /* Hero Section Styles */
 
 .hero {
-  background-color: #f7f7f7;
+  background-image: linear-gradient(to bottom, #f7f7f7, #fff);
+  /* Add a subtle gradient */
   padding: 40px;
   text-align: center;
 }
 
-.hero h1 {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
-
-.hero p {
-  font-size: 18px;
-  margin-bottom: 30px;
-}
-
 .hero button {
-  background-color: #333;
+  background-color: #4CAF50;
+  /* Use the green color for the button */
   color: #fff;
   border: none;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
+  border-radius: 5px;
+  /* Add a rounded corner */
 }
 
 .hero button:hover {
-  background-color: #444;
+  background-color: #3e8e41;
+  /* Darken the green color on hover */
 }
 
 /* Features Section Styles */
@@ -84,18 +214,16 @@ p {
   padding: 40px;
 }
 
-.features h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.features p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
 .features .col-md-4 {
   margin-bottom: 20px;
+  padding: 20px;
+  /* Add some padding to the columns */
+  border: 1px solid #ddd;
+  /* Add a light gray border */
+  border-radius: 10px;
+  /* Add a rounded corner */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Add a subtle shadow */
 }
 
 /* Responsive Styles */
@@ -104,12 +232,15 @@ p {
   .hero {
     padding: 20px;
   }
+
   .hero h1 {
     font-size: 24px;
   }
+
   .features {
     padding: 20px;
   }
+
   .features h2 {
     font-size: 18px;
   }
@@ -123,4 +254,35 @@ footer {
   clear: both;
   max-width: auto;
   margin: 0 auto;
+  border-top: 5px solid #4CAF50;
+  /* Add a green border */
+}
+
+.navbar {
+  border-radius: 10px;
+  /* add rounded edges to the navbar */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* add a subtle shadow */
+  background-color: #333;
+  /* change the background color to a darker shade */
+  padding: 10px;
+  /* add some padding to the navbar */
+}
+
+.navbar-toggler {
+  border-radius: 50%;
+  /* make the toggle button rounded */
+  border: none;
+  /* remove the border */
+  padding: 10px;
+  /* add some padding to the toggle button */
+  background-color: #4CAF50;
+  /* change the background color to a green shade */
+  color: #fff;
+  /* change the text color to white */
+}
+
+.navbar-toggler-icon {
+  font-size: 24px;
+  /* increase the font size of the toggle icon */
 }
