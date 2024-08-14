@@ -1,0 +1,178 @@
+.navbar-Logo {
+    text-decoration: none;
+    font-size: 30px;
+    font-family: "Matemasie", sans-serif;
+    color: #3e8e41;
+}
+
+.navbar-link {
+    font-size: 20px;
+    color: #8BC34A;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+
+.row2 {
+    align-items: center;
+    display: flex;
+}
+
+.drop-item {
+    font-size: 15px;
+    color: #8BC34A;
+    text-decoration: none;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: bold;
+    color: #212121;
+}
+
+a {
+    text-decoration: none;
+    color: #337ab7;
+}
+
+a:hover {
+    color: #23527c;
+}
+
+/* Header Styles */
+
+/* Navigation Styles */
+
+.navbar {
+    background-color: #337ab7;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.navbar-nav {
+    margin-top: 10px;
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.nav-link {
+    color: #000000;
+}
+
+.nav-link:hover {
+    color: #ccc;
+}
+
+.dropdown-menu {
+    background-color: #337ab7;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.dropdown-item {
+    color: #fff;
+}
+
+.dropdown-item:hover {
+    background-color: #23527c;
+    color: #fff;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.head {
+    background-color: #337ab7;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.font {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.form-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.btn:hover {
+    background-color: #444;
+}
+
+#sign {
+    text-align: center;
+    margin-top: 20px;
+    display: block;
+    color: #337ab7;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    clear: both;
+    max-width: auto;
+    margin: 0 auto;
+}
