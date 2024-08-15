@@ -142,16 +142,19 @@ def community():
         flash("You need to be logged in to access this page")
         return redirect(url_for("login"))
 
+
 @app.route("/bmi_calculator", methods=["GET", "POST"])
 def bmi_calculator():
     if request.method == "POST":
         weight = float(request.form["weight"])
         height = float(request.form["height"])
 
-        bmi = weight / (height ** 2)
+        bmi = weight / (height**2)
         bmi_category = get_bmi_category(bmi)
 
-        return render_template("bmi_calculator.html", bmi=bmi, bmi_category=bmi_category)
+        return render_template(
+            "bmi_calculator.html", bmi=bmi, bmi_category=bmi_category
+        )
     return render_template("bmi_calculator.html")
 
 
