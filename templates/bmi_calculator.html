@@ -106,7 +106,7 @@
     <main>
       <div class="calculator container">
         <h2 class="text-center mb-5">BMI Calculator</h2>
-        <form action="" method="POST">
+        <form action="" method="POST" id="bmi-calculator">
           <div class="mb-4">
             <label class="form-label" for="weight">Weight (kg):</label>
             <input type="number" id="weight" class="form-control" />
@@ -118,16 +118,14 @@
           <button class="btn btn-primary" id="calculate-bmi">
             Calculate BMI
           </button>
-          {% if bmi %}
           <div class="result mt-5">
-            <p id="result">
+            <p id="result" class="bmi-result">
               Your Result <br /><span class="display-3 fw-bold">{{ bmi }}</span>
             </p>
             <p id="bmi-category">
               You're <br /><span class="display-6">{{ bmi_category }}</span>
             </p>
           </div>
-          {% endif %}
         </form>
       </div>
     </main>
@@ -136,6 +134,40 @@
         <p>&copy; 2024 Food Champs Community</p>
       </div>
     </footer>
+
+    <script>
+      const weight = document.getElementById("weight");
+      const height = document.getElementById("height");
+
+      const bmiResult = document.querySelector(".bmi-result");
+      const bmiCategory = document.getElementById("bmi-category");
+
+      function getBmiCategory(bmi) {
+        // Get the bmi category
+        if (bmi < 18.5) {
+          return "Underweight";
+        } else if (bmi < 25) {
+          return "Normal weight";
+        } else if (bmi < 30) {
+          return "Overweight";
+        } else {
+          return "Obese";
+        }
+      }
+
+      const bmiCalculator = document.getElementById("bmi-calculator");
+      bmiCalculator.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const weightValue = parseFloat(weight.value);
+        const heightValue = parseFloat(height.value);
+        const bmi = Number(weightValue / (heightValue * heightValue)).toFixed(2);
+        const bmiCategoryValue = getBmiCategory(bmi);
+        bmiResult.innerHTML = `Your Result: <br /><span class="display-3 fw-bold">${bmi}</span>`;
+        bmiCategory.innerHTML = `You're <br /><span class="display-6">${bmiCategoryValue}</span>`;
+      });
+
+    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
