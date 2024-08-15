@@ -1,157 +1,175 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    login_required,
+    logout_user,
+    current_user,
+)
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with your own secret key
+app.secret_key = "your_secret_key"
 
-# Database setup
-def init_db():
-    with sqlite3.connect('bmi_meals.db') as conn:
-        cursor = conn.cursor()
 
-        # Create users table
-        cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
-            password TEXT NOT NULL
-        )
-        ''')
+def get_db():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS users
+            (id INTEGER PRIMARY KEY, username TEXT, email TEXT, password TEXT)"""
+    )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS comments
+            (id INTEGER PRIMARY KEY, user_id INTEGER, comment TEXT, FOREIGN KEY (user_id) REFERENCES users (id))"""
+    )
+    conn.commit()
+    return conn, c
 
-        # Create meals table if not exists (reuse the previous code)
-        cursor.execute('''
-        CREATE TABLE IF NOT EXISTS meals (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            meal_name TEXT NOT NULL,
-            calories INTEGER NOT NULL,
-            protein REAL NOT NULL,
-            carbohydrates REAL NOT NULL,
-            fats REAL NOT NULL
-        )
-        ''')
 
-        conn.commit()
+class User(UserMixin):
+    def __init__(self, id, username, email, password):
+        self.id = id
+        self.username = username
+        self.email = email
+        self.password = password
 
-# Calculate BMI function
-def calculate_bmi(weight, height):
-    return round(weight / (height / 100) ** 2, 2)
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
 
-# Calculate nutritional information for a meal
-def calculate_nutritional_info(meal_name, amount):
-    conn = sqlite3.connect('bmi_meals.db')
-    cursor = conn.cursor()
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
-    cursor.execute('''
-    SELECT calories, protein, carbohydrates, fats
-    FROM meals
-    WHERE meal_name = ?
-    ''', (meal_name,))
-    
-    meal = cursor.fetchone()
-    
-    conn.close()
 
-    if meal:
-        calories, protein, carbohydrates, fats = meal
-        calculated_nutrition = {
-            'calories': calories * (amount / 100),
-            'protein': protein * (amount / 100),
-            'carbohydrates': carbohydrates * (amount / 100),
-            'fats': fats * (amount / 100)
-        }
-        return calculated_nutrition
-    else:
-        return None
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
-@app.route('/')
+
+@login_manager.user_loader
+def load_user(user_id):
+    conn, c = get_db()
+    c.execute("SELECT * FROM users WHERE id=?", (user_id,))
+    row = c.fetchone()
+    if row:
+        return User(row[0], row[1], row[2], row[3])
+    return None
+
+
+# Home Route
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route('/signup', methods=['GET', 'POST'])
+
+# Signup Route
+@app.route("/signup", methods=["GET", "POST"])
 def signup():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        hashed_password = generate_password_hash(password)
+    conn, c = get_db()
+    if request.method == "POST":
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+        confirm_password = request.form["confirm_password"]
 
-        with sqlite3.connect('bmi_meals.db') as conn:
-            cursor = conn.cursor()
-            try:
-                cursor.execute('''
-                INSERT INTO users (username, password)
-                VALUES (?, ?)
-                ''', (username, hashed_password))
-                conn.commit()
-                flash('Signup successful! Please log in.', 'success')
-                return redirect(url_for('login'))
-            except sqlite3.IntegrityError:
-                flash('Username already exists. Please choose another one.', 'danger')
+        if password != confirm_password:
+            flash("Passwords do not match")
+            return redirect(url_for("signup"))
 
-    return render_template('signup.html')
+        c.execute("SELECT * FROM users WHERE username=?", (username,))
+        if c.fetchone():
+            flash("Username already exists")
+            return redirect(url_for("signup"))
 
-@app.route('/login', methods=['GET', 'POST'])
+        c.execute(
+            "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+            (username, email, generate_password_hash(password)),
+        )
+        conn.commit()
+        flash("Account created successfully")
+        return redirect(url_for("login"))
+
+    return render_template("signup.html")
+
+
+# Login Route
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
 
-        with sqlite3.connect('bmi_meals.db') as conn:
-            cursor = conn.cursor()
-            cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
-            user = cursor.fetchone()
-
-            if user and check_password_hash(user[2], password):  # Assuming password is stored hashed
-                session['user_id'] = user[0]
-                session['username'] = user[1]
-                flash('Login successful!', 'success')
-                
-                # Pass user data to the index template
-                return redirect(url_for('index', username=user[1]))  # Redirect to index with username
-            else:
-                flash('Invalid username or password', 'danger')
-
-    return render_template('login.html')
-
-
-
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    session.pop('username', None)
-    flash('You have been logged out.', 'success')
-    return redirect(url_for('index'))  # or redirect to a dedicated logout page
-
-
-
-
-
-@app.route('/bmi', methods=['GET', 'POST'])
-def bmi_calculator():
-    if request.method == 'POST':
-        weight = float(request.form['weight'])
-        height = float(request.form['height'])
-        bmi = calculate_bmi(weight, height)
-        return render_template('result.html', result=f'Your BMI is {bmi}')
-    return render_template('bmi_calculator.html')
-
-@app.route('/calories', methods=['GET', 'POST'])
-def calories_calculator():
-    if request.method == 'POST':
-        meal_name = request.form['meal_name']
-        amount = float(request.form['amount'])
-        nutritional_info = calculate_nutritional_info(meal_name, amount)
-
-        if nutritional_info:
-            return render_template('result.html', result=f"Nutritional info for {amount} grams of {meal_name}: "
-                                                         f"Calories: {nutritional_info['calories']} kcal, "
-                                                         f"Protein: {nutritional_info['protein']} g, "
-                                                         f"Carbohydrates: {nutritional_info['carbohydrates']} g, "
-                                                         f"Fats: {nutritional_info['fats']} g")
+        conn, c = get_db()
+        c.execute("SELECT * FROM users WHERE email=?", (email,))
+        row = c.fetchone()
+        if row and check_password_hash(row[3], password):
+            user = User(row[0], row[1], row[2], row[3])
+            login_user(user)
+            flash("Login successful")
+            return redirect(url_for("dashboard"))
         else:
-            return render_template('result.html', result=f"Meal '{meal_name}' not found in the database.")
-    return render_template('calories_calculator.html')
+            flash("Invalid username or password")
+            return redirect(url_for("login"))
 
-if __name__ == '__main__':
-    init_db()  # Initialize the database
+    return render_template("login.html")
+
+
+# Dashboard Route
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    if current_user.is_authenticated:
+        return render_template("dashboard.html")
+    else:
+        flash("You need to be logged in to access this page")
+        return redirect(url_for("login"))
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
+
+
+@app.route("/community")
+def community():
+    if current_user.is_authenticated:
+        return render_template("community.html")
+    else:
+        flash("You need to be logged in to access this page")
+        return redirect(url_for("login"))
+
+@app.route("/bmi_calculator", methods=["GET", "POST"])
+def bmi_calculator():
+    if request.method == "POST":
+        weight = float(request.form["weight"])
+        height = float(request.form["height"])
+
+        bmi = weight / (height ** 2)
+        bmi_category = get_bmi_category(bmi)
+
+        return render_template("bmi_calculator.html", bmi=bmi, bmi_category=bmi_category)
+    return render_template("bmi_calculator.html")
+
+
+def get_bmi_category(bmi):
+    if bmi < 18.5:
+        return "Underweight"
+    elif bmi < 25:
+        return "Normal weight"
+    elif bmi < 30:
+        return "Overweight"
+    else:
+        return "Obese"
+
+
+@app.route("/calories_calculator")
+def calories_calculator():
+    return render_template("calories_calculator.html")
+
+
+if __name__ == "__main__":
     app.run(debug=True)

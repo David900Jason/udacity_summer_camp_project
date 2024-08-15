@@ -16,11 +16,17 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="shortcut icon" href="../assets/logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="../styles/main.css" />
-    <title>Login</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='logo.png') }}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+    <title>Food Champs - Healthy Eating Made Easy</title>
   </head>
-
   <body>
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary rounded">
@@ -28,13 +34,13 @@
           <div class="d-flex">
             <div class="me-2">
               <img
-                src="../assets/logo.png"
+                src="../static/logo.png"
                 width="48px"
                 height="48px"
                 alt="Logo"
               />
             </div>
-            <a class="navbar-Logo" href="../index.html">Food Champs</a>
+            <a class="navbar-Logo" href="{{ url_for('index') }}">Food Champs</a>
           </div>
           <button
             class="navbar-toggler"
@@ -53,7 +59,9 @@
                 <a class="navbar-link" href="#">About us</a>
               </li>
               <li class="nav-item">
-                <a class="navbar-link" href="login.html">Your Profile</a>
+                <a class="navbar-link" href="{{ url_for('dashboard') }}"
+                  >Your Profile</a
+                >
               </li>
               <li class="navbar-item dropdown">
                 <a
@@ -66,64 +74,40 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="drop-item" href="bmi_calculator.html"
+                    <a class="drop-item" href="{{ url_for('bmi_calculator') }}"
                       >BMI Calculator</a
                     >
                   </li>
                   <li>
-                    <a class="drop-item" href="calories_calculator.html"
+                    <a
+                      class="drop-item"
+                      href="{{ url_for('calories_calculator') }}"
                       >Calories Calculator</a
                     >
                   </li>
                   <li>
-                    <a class="drop-item" href="community.html">Community</a>
+                    <a class="drop-item" href="{{ url_for('community') }}"
+                      >Community</a
+                    >
                   </li>
                 </ul>
               </li>
+              {% if current_user.is_authenticated %}
+              <li class="nav-item">
+                <a class="navbar-link" href="{{ url_for('logout') }}">Logout</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
       </nav>
       <div class="head">
-        <h3 class="font">#Food_Champs!</h3>
-        <p>
-          We're on a mission to help you make healthy food choices and become a
-          #Food_Champ!
-        </p>
+        <h3 class="font">Welcome to your dashboard</h3>
+        <p>Hello, {{ current_user.username }}</p>
       </div>
     </header>
-    <main>
-      <div class="container">
-        <h2 class="text-center mb-5">Login to your Account!</h2>
-        <form>
-          <div class="mb-4">
-            <label for="exampleInputEmail1" class="form-label"
-              >Email address</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" class="form-text">
-              We'll never share your email with anyone else.
-            </div>
-          </div>
-          <div class="mb-4">
-            <label for="exampleInputPassword1" class="form-label"
-              >Password</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Log in</button><br />
-          <a href="../pages/signup.html" id="sign">Don't have an account?</a>
-        </form>
-      </div>
+    <main style="margin-block: 10rem">
+      <div class="container"></div>
     </main>
     <footer>
       <div>

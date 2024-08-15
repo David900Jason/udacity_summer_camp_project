@@ -16,9 +16,9 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="shortcut icon" href="../assets/logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="../styles/main.css" />
-    <link rel="stylesheet" href="../styles/community.css" />
+    <link rel="shortcut icon" href="../static/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../static/main.css" />
+    <link rel="stylesheet" href="../static/community.css" />
     <title>Food Champs Community</title>
   </head>
   <body>
@@ -28,13 +28,13 @@
           <div class="d-flex">
             <div class="me-2">
               <img
-                src="../assets/logo.png"
+                src="../static/logo.png"
                 width="48px"
                 height="48px"
                 alt="Logo"
               />
             </div>
-            <a class="navbar-Logo" href="../index.html">Food Champs</a>
+            <a class="navbar-Logo" href="{{ url_for('index') }}">Food Champs</a>
           </div>
           <button
             class="navbar-toggler"
@@ -53,7 +53,7 @@
                 <a class="navbar-link" href="#">About us</a>
               </li>
               <li class="nav-item">
-                <a class="navbar-link" href="../pages/login.html"
+                <a class="navbar-link" href="{{ url_for('dashboard') }}"
                   >Your Profile</a
                 >
               </li>
@@ -68,24 +68,29 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="drop-item" href="../pages/bmi_calculator.html"
+                    <a class="drop-item" href="{{ url_for('bmi_calculator') }}"
                       >BMI Calculator</a
                     >
                   </li>
                   <li>
                     <a
                       class="drop-item"
-                      href="../pages/calories_calculator.html"
+                      href="{{ url_for('calories_calculator') }}"
                       >Calories Calculator</a
                     >
                   </li>
                   <li>
-                    <a class="drop-item" href="../pages/community.html"
+                    <a class="drop-item" href="{{ url_for('community') }}"
                       >Community</a
                     >
                   </li>
                 </ul>
               </li>
+              {% if current_user.is_authenticated %}
+              <li class="nav-item">
+                <a class="navbar-link" href="{{ url_for('logout') }}">Logout</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -102,7 +107,7 @@
       <div class="container">
         <h2 class="mb-5">Community Posts</h2>
         <div id="comment-container">
-          <div class="card">
+          <!-- <div class="card">
             <div class="card-body">
               <h5 class="card-title">Healthy Breakfast Ideas</h5>
               <p class="card-text">
@@ -137,7 +142,7 @@
               </p>
               <p class="card-text">Posted by: <a href="#">@foodsnoteat</a></p>
             </div>
-          </div>
+          </div> -->
         </div>
         <div id="new-comment-container">
           <h2 class="mb-5">Add a new comment</h2>
@@ -155,8 +160,8 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="comment-content"
-                >Write your comment:</label
-              >
+                >Write your comment:
+              </label>
               <textarea
                 id="comment-content"
                 class="form-control"
@@ -173,6 +178,83 @@
         <p>&copy; 2024 Food Champs Community</p>
       </div>
     </footer>
+
+    <script>
+      const commentHeader = document.getElementById("comment-header");
+      const commentContent = document.getElementById("comment-content");
+      const commentsContainer = document.getElementById("comment-container");
+      const commentsForm = document.getElementById("add-comment-form");
+
+      window.onload = function () {
+        if (!localStorage.getItem("comments")) {
+          localStorage.setItem(
+            "comments",
+            `<div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Healthy Breakfast Ideas</h5>
+              <p class="card-text">
+                Start your day with a nutritious breakfast! 🍳🥑
+              </p>
+              <p class="card-text">Posted by: <a href="#">@foodie123</a></p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Fitness Motivation</h5>
+              <p class="card-text">
+                Get moving and crush your fitness goals! 🏋️‍♀️💪
+              </p>
+              <p class="card-text">Posted by: <a href="#">@fitlife90</a></p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Mindful Eating</h5>
+              <p class="card-text">
+                Pay attention to your hunger and fullness cues! 🍴👀
+              </p>
+              <p class="card-text">Posted by: <a href="#">@mindfuleater</a></p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Recipe Share</h5>
+              <p class="card-text">
+                Try this delicious and healthy recipe! 🍲👌
+              </p>
+              <p class="card-text">Posted by: <a href="#">@foodsnoteat</a></p>
+            </div>
+          </div>`
+          );
+        } else {
+          commentsContainer.innerHTML = localStorage.getItem("comments");
+        }
+      };
+
+      const usernameString = "{{ current_user.username }}";
+      const username = usernameString.includes(" ")
+        ? usernameString.split(" ").join("_")
+        : usernameString;
+
+      commentsForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newCommentHTML = `
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">${commentHeader.value}</h5>
+              <p class="card-text">
+                ${commentContent.value}
+              </p>
+              <p class="card-text">Posted by: <a href="#">@${username.toLowerCase()}</a></p>
+            </div>
+          </div>
+        `;
+        commentsContainer.innerHTML += newCommentHTML;
+        localStorage.setItem("comments", commentsContainer.innerHTML);
+        console.log(username);
+      });
+    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
