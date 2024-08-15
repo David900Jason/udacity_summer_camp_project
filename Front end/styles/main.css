@@ -100,18 +100,18 @@ p {
   justify-content: end;
 }
 
-.drop-item {
-  font-size: 15px;
-  color: #8bc34a;
-  text-decoration: none;
-  padding-left: 20px;
-  padding-top: 5px;
-}
-
 .navbar-brand {
   font-size: 24px;
   font-weight: bold;
   color: #333;
+}
+
+.dropdown-menu {
+  padding: 1rem;
+}
+
+.dropdown-menu > *:not(:last-child) {
+  margin-bottom: .5rem;
 }
 
 .dropdown-item {
@@ -132,6 +132,22 @@ p {
 
 .dropdown-item:hover {
   color: #ccc;
+}
+
+.drop-item {
+  font-size: 15px;
+  color: #8bc34a;
+  text-decoration: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  margin-block: 12.5rem;
 }
 
 .row2 {
@@ -162,9 +178,8 @@ p {
 }
 
 .hero {
-  margin-block: 12.5rem;
+  display: flex;
   text-align: start;
-  padding: 40px;
 }
 
 .hero h1 {
@@ -182,10 +197,6 @@ p {
 
 .hero .hero-img {
   border-radius: 10px;
-}
-
-.features {
-  margin-block: 8rem;
 }
 
 .features-icon {
@@ -230,7 +241,12 @@ footer {
   border-top: 5px solid var(--primary-color);
 }
 
-button {
+footer p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.btn {
   color: #fff !important;
   border: none !important;
   padding: 10px 30px !important;
@@ -240,6 +256,44 @@ button {
   background-color: var(--primary-color) !important;
 }
 
-button:hover {
+.btn:hover {
   background-color: #3e8e41;
+}
+
+form {
+  margin: 0 auto;
+  padding: 42px 32px;
+  max-width: 500px;
+  background-color: #fff !important;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+form button {
+  display: block !important;
+  margin-inline: auto !important;
+  background-color: var(--primary-color) !important;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+#sign {
+  text-align: center;
+  display: block;
+  color: #337ab7;
+}
+
+.form-text {
+  font-size: 11px;
+  color: #666;
 }
