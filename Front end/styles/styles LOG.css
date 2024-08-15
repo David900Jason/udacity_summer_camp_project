@@ -1,209 +1,81 @@
 /* Global Styles */
 
-.navbar-Logo {
-    text-decoration: none;
-    font-size: 30px;
-    font-family: "Matemasie", sans-serif;
-    color: #3e8e41;
-}
-
-.navbar-link {
-    font-size: 20px;
-    color: #8BC34A;
-    text-decoration: none;
-    padding-left: 20px;
-    padding-top: 5px;
-}
-
-.row2 {
-    align-items: center;
-    display: flex;
-}
-
-.drop-item {
-    font-size: 15px;
-    color: #8BC34A;
-    text-decoration: none;
-    padding-left: 20px;
-    padding-top: 5px;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: bold;
-    color: #212121;
-}
-
-a {
-    text-decoration: none;
-    color: #337ab7;
-}
-
-a:hover {
-    color: #23527c;
-}
-
-/* Header Styles */
-
-.dropdown-menu {
-    background-color: #337ab7;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-}
-
-.dropdown-item {
-    color: #fff;
-}
-
-.dropdown-item:hover {
-    background-color: #23527c;
-    color: #fff;
-}
-
-/* Main Styles */
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
 .row {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
-    padding: 20px;
+  padding: 20px;
 }
 
 .card-title {
-    font-size: 18px;
-    margin-bottom: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .card-text {
-    font-size: 16px;
-    margin-bottom: 20px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 /* Footer Styles */
 
 footer p {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-}
-
-.head {
-    background-color: #337ab7;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
-
-.head h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.head p {
-    font-size: 18px;
-    margin-bottom: 20px;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin-top: -50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: -50px;
 }
 
 form {
-    width: 400px;
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  padding: 42px 32px;
+  max-width: 500px;
+  background-color: #fff !important;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+form button {
+  display: block !important;
+  margin-inline: auto !important;
+  background-color: var(--primary-color) !important;
 }
 
 .form-label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .form-control {
-    height: 40px;
-    padding: 10px;
-    font-size: 18px;
-    width: 100%;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-}
-
-.btn-primary {
-    background-color: #337ab7;
-    border-color: #337ab7;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.btn-primary:hover {
-    background-color: #23527c;
-    border-color: #23527c;
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    clear: both;
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  width: 100%;
+  border: 1px solid #ccc;
 }
 
 #sign {
-    text-align: center;
-    margin-top: 20px;
-    display: block;
-    color: #337ab7;
-}
-
-.btn {
-    background-color: #337ab7;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
+  text-align: center;
+  display: block;
+  color: #337ab7;
 }
 
 .form-text {
-    font-size: 14px;
-    color: #666;
+  font-size: 11px;
+  color: #666;
 }

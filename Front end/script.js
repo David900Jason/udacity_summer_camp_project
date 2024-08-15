@@ -1,13 +1,13 @@
-const addCommentForm = document.getElementById('add-comment-form');
-const newCommentContainer = document.getElementById('new-comment-container');
+const addCommentForm = document.getElementById("add-comment-form");
+const newCommentContainer = document.getElementById("new-comment-container");
 
 // Get the existing comments from local storage
-let comments = JSON.parse(localStorage.getItem('comments')) || [];
+let comments = JSON.parse(localStorage.getItem("comments")) || [];
 
-addCommentForm.addEventListener('submit', (e) => {
+addCommentForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const commentHeader = document.getElementById('comment-header').value;
-  const commentContent = document.getElementById('comment-content').value;
+  const commentHeader = document.getElementById("comment-header").value;
+  const commentContent = document.getElementById("comment-content").value;
   let userName = "test";
   if (!localStorage.getItem("user")) {
     alert("Please login to add a comment");
@@ -19,14 +19,14 @@ addCommentForm.addEventListener('submit', (e) => {
   const newComment = {
     header: commentHeader,
     content: commentContent,
-    username: userName
+    username: userName,
   };
 
   // Add the new comment to the array
   comments.push(newComment);
 
   // Save the comments to local storage
-  localStorage.setItem('comments', JSON.stringify(comments));
+  localStorage.setItem("comments", JSON.stringify(comments));
 
   // Append the new comment to the new comment container
   const newCommentHTML = `
@@ -42,14 +42,14 @@ addCommentForm.addEventListener('submit', (e) => {
         `;
   newCommentContainer.innerHTML += newCommentHTML;
 
-  document.getElementById('comment-header').value = '';
-  document.getElementById('comment-content').value = '';
+  document.getElementById("comment-header").value = "";
+  document.getElementById("comment-content").value = "";
 });
 
 // Load comments from local storage and append to new comment container
 function loadComments() {
-  comments = JSON.parse(localStorage.getItem('comments')) || [];
-  newCommentContainer.innerHTML = '';
+  comments = JSON.parse(localStorage.getItem("comments")) || [];
+  newCommentContainer.innerHTML = "";
   comments.forEach((comment) => {
     const commentHTML = `
             <div class="col-md-6">
